@@ -1,6 +1,7 @@
-name: Compare commits' files
+name: Detect changes
 description: >-
-  Check whether the specified files were changed in a pull request or push
+  Check whether any files matching the specified glob pattern(s) were changed
+  in a pull request or push (or between two arbitrary commits).
 
 branding:
   color: orange

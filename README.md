@@ -1,7 +1,7 @@
-# Compare commits' files
+# Detect changes
 
-Check whether the specified files were changed in a pull request or push
-(or between two arbitrary commits).
+Check whether files matching the specified glob patterns were changed
+in a pull request or push (or between two arbitrary commits).
 
 This action uses GitHub API and not `git` CLI,
 so it won't work for local commits that weren't pushed to GitHub.

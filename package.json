@@ -1,14 +1,14 @@
 {
-  "name": "compare-commit-files-action",
+  "name": "detect-changes-action",
   "private": true,
-  "description": "Create or update a pull request through GitHub API",
-  "homepage": "https://github.com/amezin/compare-commit-files-action#readme",
+  "description": "Check whether any files matching the specified glob pattern(s) were changed between two commits",
+  "homepage": "https://github.com/amezin/detect-changes-action#readme",
   "bugs": {
-    "url": "https://github.com/amezin/compare-commit-files-action/issues"
+    "url": "https://github.com/amezin/detect-changes-action/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amezin/compare-commit-files-action.git"
+    "url": "git+https://github.com/amezin/detect-changes-action.git"
   },
   "license": "MIT",
   "engines": {
