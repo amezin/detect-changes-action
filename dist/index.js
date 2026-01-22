@@ -32308,6 +32308,7 @@ async function run() {
     const repository = core.getInput('repository', { required: true });
     const base = core.getInput('base', { required: true });
     const head = core.getInput('head', { required: true });
+    const ignoreRemoved = core.getBooleanInput('ignore-removed');
     const patterns = core
         .getMultilineInput('files', { required: true })
         .map(pattern => new minimatch_1.Minimatch(pattern.trim(), minimatchOptions))
@@ -32328,7 +32329,15 @@ async function run() {
         return;
     }
     const filtered = files
-        ?.flatMap(file => [file.filename, file.previous_filename].filter(v => v))
+        ?.flatMap(file => {
+        if (ignoreRemoved && file.status === 'removed') {
+            return [];
+        }
+        if (ignoreRemoved || !file.previous_filename) {
+            return [file.filename];
+        }
+        return [file.filename, file.previous_filename];
+    })
         .filter(filename => {
         const match = patterns.find(pattern => pattern.match(filename));
         return match && !match.negate;

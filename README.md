@@ -50,6 +50,12 @@ otherwise `${{ github.sha }}` - the "current commit" or merge commit for pull re
 > There is a special case for `pull_request_target` event -
 > because `${{ github.sha }}` will be the head of the base branch for `pull_request_target`.
 
+### `ignore-removed`
+
+Ignore removed files - return `false` if all changes are just removals.
+
+**Default**: `false`
+
 ### `github-token`
 
 GitHub API token to use.

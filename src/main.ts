@@ -50,6 +50,7 @@ async function run() {
     const repository = core.getInput('repository', { required: true });
     const base = core.getInput('base', { required: true });
     const head = core.getInput('head', { required: true });
+    const ignoreRemoved = core.getBooleanInput('ignore-removed');
     const patterns = core
         .getMultilineInput('files', { required: true })
         .map(pattern => new Minimatch(pattern.trim(), minimatchOptions))
@@ -76,11 +77,19 @@ async function run() {
     }
 
     const filtered = files
-        ?.flatMap(file =>
-            [file.filename, file.previous_filename].filter(v => v)
-        )
+        ?.flatMap(file => {
+            if (ignoreRemoved && file.status === 'removed') {
+                return [];
+            }
+
+            if (ignoreRemoved || !file.previous_filename) {
+                return [file.filename];
+            }
+
+            return [file.filename, file.previous_filename];
+        })
         .filter(filename => {
-            const match = patterns.find(pattern => pattern.match(filename!));
+            const match = patterns.find(pattern => pattern.match(filename));
 
             return match && !match.negate;
         });
@@ -96,7 +105,7 @@ async function run() {
     core.startGroup('Changed files');
 
     for (const filename of filtered) {
-        core.info(filename!);
+        core.info(filename);
     }
 
     core.endGroup();

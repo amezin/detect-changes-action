@@ -136,3 +136,27 @@ jobs:
       - run: test "$CHANGED" = "false"
         env:
           CHANGED: ${{ steps.empty.outputs.changed }}
+
+      - id: removal
+        uses: ./.
+        with:
+          files: .github/dependabot.yml
+          head: fda90f4116b0a18ee68629ceb6dbdeb530bc8b31
+          base: ffa4731f9853fe8dd1f14e0adb7ace7185560ded
+          ignore-removed: false
+
+      - run: test "$CHANGED" = "true"
+        env:
+          CHANGED: ${{ steps.removal.outputs.changed }}
+
+      - id: removal-ignored
+        uses: ./.
+        with:
+          files: .github/dependabot.yml
+          head: fda90f4116b0a18ee68629ceb6dbdeb530bc8b31
+          base: ffa4731f9853fe8dd1f14e0adb7ace7185560ded
+          ignore-removed: true
+
+      - run: test "$CHANGED" = "false"
+        env:
+          CHANGED: ${{ steps.removal-ignored.outputs.changed }}

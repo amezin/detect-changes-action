@@ -27,6 +27,11 @@ inputs:
     default: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.merge_commit_sha || github.sha }}
     required: true
 
+  ignore-removed:
+    description: Ignore removed files - return `false` if all changes are just removals
+    default: 'false'
+    required: true
+
   github-token:
     description: GitHub API token to use
     default: ${{ github.token }}
