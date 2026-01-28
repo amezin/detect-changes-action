@@ -66,6 +66,7 @@ jobs:
         uses: ./.
         with:
           files: ${{ steps.current-pr-files.outputs.files }}
+          ignore-removed: true
 
       - run: test "$CHANGED" = "true"
         if: steps.current-pr.outcome == 'success'
@@ -86,6 +87,7 @@ jobs:
         uses: ./.
         with:
           files: ${{ steps.current-pr-negate-files.outputs.files }}
+          ignore-removed: true
 
       - run: test "$CHANGED" = "false"
         if: steps.current-pr-negate.outcome == 'success'
