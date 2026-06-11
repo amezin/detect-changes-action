@@ -18,7 +18,7 @@
   "dependencies": {
     "@actions/core": "3.0.1",
     "@amezin/js-actions-octokit": "5.0.0",
-    "minimatch": "10.1.2"
+    "minimatch": "10.2.3"
   },
   "devDependencies": {
     "@amezin/eslint-config-js-actions": "5.0.0",
