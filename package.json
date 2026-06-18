@@ -17,11 +17,11 @@
   "type": "module",
   "dependencies": {
     "@actions/core": "3.0.1",
-    "@amezin/js-actions-octokit": "5.0.0",
+    "@amezin/js-actions-octokit": "5.1.2",
     "minimatch": "10.2.5"
   },
   "devDependencies": {
-    "@amezin/eslint-config-js-actions": "5.0.0",
+    "@amezin/eslint-config-js-actions": "5.1.2",
     "@types/node": "24.13.1",
     "@vercel/ncc": "0.44.0",
     "typescript": "6.0.3"
