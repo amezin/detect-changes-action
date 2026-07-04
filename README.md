@@ -43,12 +43,27 @@ Or the previous branch head for `push` event.
 
 Head commit/branch to compare.
 
-**Default**: `${{ github.event.pull_request.merge_commit_sha }}` for `pull_request_target` event,
-otherwise `${{ github.sha }}` - the "current commit" or merge commit for pull requests.
+**Default**: `${{ github.sha }}` - the "current commit" or merge commit for pull requests.
 
-> [!NOTE]
-> There is a special case for `pull_request_target` event -
-> because `${{ github.sha }}` will be the head of the base branch for `pull_request_target`.
+> [!WARNING]
+> The default value won't work correctly for `pull_request_target` event.
+> To check changed files of a pull request in `pull_request_target` event,
+> you have to get merge commit SHA from GitHub API first, because it's not
+> provided in `github.event.pull_request.merge_commit_sha` anymore:
+
+```yml
+- id: get-merge-sha
+  if: ${{ github.event.pull_request }}
+  run: |
+    sha="$(curl -s "$URL" | jq -r .merge_commit_sha)"
+    echo "sha=$sha" | tee "$GITHUB_OUTPUT"
+  env:
+    URL: ${{ github.event.pull_request.url }}
+
+- uses: amezin/detect-changes-action@v2
+  with:
+    head: ${{ steps.get-merge-sha.outputs.sha || github.sha }}
+```
 
 ### `ignore-removed`
 
