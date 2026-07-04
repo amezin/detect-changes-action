@@ -14,7 +14,7 @@ const defaultHeaders = {
     'X-GitHub-Api-Version': '2026-03-10',
 };
 
-const log: OctokitOptions['log'] = {
+const log: NonNullable<OctokitOptions['log']> = {
     debug: (...args) => {
         core.debug(util.format(...args));
     },

@@ -1,9 +1,10 @@
 import { inspect } from 'node:util';
 
 import * as core from '@actions/core';
-import { getOctokit } from './octokit.js';
-
 import { Minimatch, MinimatchOptions } from 'minimatch';
+
+import { getOctokit } from './octokit.js';
+import pkg from '../package.json' with { type: 'json' };
 
 class Repository {
     private readonly octokit: ReturnType<typeof getOctokit>;
@@ -65,7 +66,9 @@ async function run() {
         }
     }
 
-    const github = getOctokit(token);
+    const github = getOctokit(token, {
+        userAgent: `${pkg.name}/v${pkg.version}`,
+    });
     const repo = new Repository(github, repository);
 
     const { files } = await repo.compareCommits([base, head].join('...'));
