@@ -35,7 +35,7 @@
     "globals": "17.6.0",
     "prettier": "3.8.4",
     "typescript-eslint": "8.61.1",
-    "@types/node": "24.13.1",
+    "@types/node": "24.13.2",
     "@octokit/types": "16.0.0",
     "@vercel/ncc": "0.44.1",
     "typescript": "6.0.3"
