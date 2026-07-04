@@ -37,7 +37,7 @@
     "typescript-eslint": "8.61.1",
     "@types/node": "24.13.1",
     "@octokit/types": "16.0.0",
-    "@vercel/ncc": "0.44.0",
+    "@vercel/ncc": "0.44.1",
     "typescript": "6.0.3"
   },
   "scripts": {
