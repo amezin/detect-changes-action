@@ -30653,6 +30653,35 @@ function qstring(str) {
 /******/ }
 /******/ 
 /************************************************************************/
+/******/ /* webpack/runtime/compat get default export */
+/******/ (() => {
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__nccwpck_require__.n = (module) => {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			() => (module['default']) :
+/******/ 			() => (module);
+/******/ 		__nccwpck_require__.d(getter, { a: getter });
+/******/ 		return getter;
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/define property getters */
+/******/ (() => {
+/******/ 	// define getter functions for harmony exports
+/******/ 	__nccwpck_require__.d = (exports, definition) => {
+/******/ 		for(var key in definition) {
+/******/ 			if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			}
+/******/ 		}
+/******/ 	};
+/******/ })();
+/******/ 
+/******/ /* webpack/runtime/hasOwnProperty shorthand */
+/******/ (() => {
+/******/ 	__nccwpck_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ })();
+/******/ 
 /******/ /* webpack/runtime/compat */
 /******/ 
 /******/ if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = new URL('.', import.meta.url).pathname.slice(import.meta.url.match(/^file:\/\/\/\w:/) ? 1 : 0, -1) + "/";
@@ -30662,6 +30691,7 @@ var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: external "node:util"
 var external_node_util_ = __nccwpck_require__(7975);
+var external_node_util_default = /*#__PURE__*/__nccwpck_require__.n(external_node_util_);
 ;// CONCATENATED MODULE: external "os"
 const external_os_namespaceObject = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("os");
 ;// CONCATENATED MODULE: ./node_modules/@actions/core/lib/utils.js
@@ -34489,7 +34519,7 @@ class RequestError extends Error {
 
 
 // pkg/dist-src/version.js
-var dist_bundle_VERSION = "10.0.10";
+var dist_bundle_VERSION = "10.0.11";
 
 // pkg/dist-src/defaults.js
 var defaults_default = {
@@ -34646,9 +34676,10 @@ function toErrorMessage(data) {
   if (data instanceof ArrayBuffer) {
     return "Unknown error";
   }
-  if ("message" in data) {
-    const suffix = "documentation_url" in data ? ` - ${data.documentation_url}` : "";
-    return Array.isArray(data.errors) ? `${data.message}: ${data.errors.map((v) => JSON.stringify(v)).join(", ")}${suffix}` : `${data.message}${suffix}`;
+  if (typeof data === "object" && data !== null && "message" in data) {
+    const objectData = data;
+    const suffix = "documentation_url" in objectData ? ` - ${objectData.documentation_url}` : "";
+    return Array.isArray(objectData.errors) ? `${objectData.message}: ${objectData.errors.map((v) => JSON.stringify(v)).join(", ")}${suffix}` : `${objectData.message}${suffix}`;
   }
   return `Unknown error: ${JSON.stringify(data)}`;
 }
@@ -38236,7 +38267,7 @@ throttling.VERSION = plugin_throttling_dist_bundle_VERSION;
 throttling.triggersNotification = triggersNotification;
 
 
-;// CONCATENATED MODULE: ./node_modules/@amezin/js-actions-octokit/lib/main.js
+;// CONCATENATED MODULE: ./src/octokit.ts
 
 
 
@@ -38248,16 +38279,16 @@ const defaultHeaders = {
 };
 const log = {
     debug: (...args) => {
-        core_debug(external_node_util_.format(...args));
+        core_debug(external_node_util_default().format(...args));
     },
     info: (...args) => {
-        info(external_node_util_.format(...args));
+        info(external_node_util_default().format(...args));
     },
     warn: (...args) => {
-        warning(external_node_util_.format(...args));
+        warning(external_node_util_default().format(...args));
     },
     error: (...args) => {
-        core_error(external_node_util_.format(...args));
+        core_error(external_node_util_default().format(...args));
     },
 };
 function requestDescription(octokit, options) {
@@ -38276,14 +38307,14 @@ function requestLog(octokit) {
     octokit.hook.wrap('request', (request, options) => {
         if (isDebug()) {
             startGroup(requestDescription(octokit, options));
-            info(external_node_util_.inspect(options));
+            info(external_node_util_default().inspect(options));
             endGroup();
         }
         const start = Date.now();
         return request(options)
             .then(response => {
             startGroup(responseDescription(octokit, options, response, start));
-            info(external_node_util_.inspect({ request: options, response }));
+            info(external_node_util_default().inspect({ request: options, response }));
             endGroup();
             return response;
         })
@@ -38292,7 +38323,7 @@ function requestLog(octokit) {
                 const { response } = error;
                 core_error(responseDescription(octokit, options, response, start));
                 startGroup('Details');
-                info(external_node_util_.inspect({
+                info(external_node_util_default().inspect({
                     request: options,
                     response,
                 }));
@@ -38324,14 +38355,14 @@ function withDefaultHeaders(octokit) {
     const request = octokit.request.defaults({ headers: defaultHeaders });
     return { request };
 }
-function main_getOctokit(token, options, ...additionalPlugins) {
+function octokit_getOctokit(token, options, ...additionalPlugins) {
     return getOctokit(token, {
         log,
         throttle,
         ...options,
     }, withDefaultHeaders, requestLog, retry, throttling, ...additionalPlugins);
 }
-//# sourceMappingURL=main.js.map
+
 ;// CONCATENATED MODULE: ./node_modules/balanced-match/dist/esm/index.js
 const balanced = (a, b, str) => {
     const ma = a instanceof RegExp ? maybeMatch(a, str) : a;
@@ -38481,19 +38512,23 @@ function gte(i, y) {
 function expand_(str, max, isTop) {
     /** @type {string[]} */
     const expansions = [];
-    const m = balanced('{', '}', str);
-    if (!m)
-        return [str];
-    // no need to expand pre, since it is guaranteed to be free of brace-sets
-    const pre = m.pre;
-    const post = m.post.length ? expand_(m.post, max, false) : [''];
-    if (/\$$/.test(m.pre)) {
-        for (let k = 0; k < post.length && k < max; k++) {
-            const expansion = pre + '{' + m.body + '}' + post[k];
-            expansions.push(expansion);
+    // The `{a},b}` rewrite below restarts expansion on a rewritten string with
+    // the same `max` and `isTop = true`. Loop instead of recursing so a long run
+    // of non-expanding `{}` groups can't exhaust the call stack.
+    for (;;) {
+        const m = balanced('{', '}', str);
+        if (!m)
+            return [str];
+        // no need to expand pre, since it is guaranteed to be free of brace-sets
+        const pre = m.pre;
+        if (/\$$/.test(m.pre)) {
+            const post = m.post.length ? expand_(m.post, max, false) : [''];
+            for (let k = 0; k < post.length && k < max; k++) {
+                const expansion = pre + '{' + m.body + '}' + post[k];
+                expansions.push(expansion);
+            }
+            return expansions;
         }
-    }
-    else {
         const isNumericSequence = /^-?\d+\.\.-?\d+(?:\.\.-?\d+)?$/.test(m.body);
         const isAlphaSequence = /^[a-zA-Z]\.\.[a-zA-Z](?:\.\.-?\d+)?$/.test(m.body);
         const isSequence = isNumericSequence || isAlphaSequence;
@@ -38502,10 +38537,16 @@ function expand_(str, max, isTop) {
             // {a},b}
             if (m.post.match(/,(?!,).*\}/)) {
                 str = m.pre + '{' + m.body + escClose + m.post;
-                return expand_(str, max, true);
+                isTop = true;
+                continue;
             }
             return [str];
         }
+        // Only expand post once we know this brace set actually expands. Computing
+        // it before the early returns above expanded post a second time on every
+        // non-expanding `{}`, which is what made inputs like `a{},{},{}...` blow up
+        // exponentially.
+        const post = m.post.length ? expand_(m.post, max, false) : [''];
         let n;
         if (isSequence) {
             n = m.body.split(/\.\./);
@@ -38581,8 +38622,8 @@ function expand_(str, max, isTop) {
                 }
             }
         }
+        return expansions;
     }
-    return expansions;
 }
 //# sourceMappingURL=index.js.map
 ;// CONCATENATED MODULE: ./node_modules/minimatch/dist/esm/assert-valid-pattern.js
@@ -40813,7 +40854,7 @@ async function run() {
             patterns.push(new Minimatch('**', minimatchOptions));
         }
     }
-    const github = main_getOctokit(token);
+    const github = octokit_getOctokit(token);
     const repo = new Repository(github, repository);
     const { files } = await repo.compareCommits([base, head].join('...'));
     if (files?.length === 300) {

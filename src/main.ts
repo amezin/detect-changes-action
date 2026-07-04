@@ -1,7 +1,7 @@
 import { inspect } from 'node:util';
 
 import * as core from '@actions/core';
-import { getOctokit } from '@amezin/js-actions-octokit';
+import { getOctokit } from './octokit.js';
 
 import { Minimatch, MinimatchOptions } from 'minimatch';
 
