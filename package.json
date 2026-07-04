@@ -30,7 +30,7 @@
     "@eslint/markdown": "8.0.3",
     "@octokit/types": "16.0.0",
     "@tsconfig/node24": "24.0.4",
-    "@tsconfig/strictest": "^2.0.8",
+    "@tsconfig/strictest": "2.0.8",
     "@types/node": "24.13.2",
     "@vercel/ncc": "0.44.1",
     "eslint": "10.6.0",
@@ -45,7 +45,8 @@
   "scripts": {
     "build": "ncc build --source-map --license dependencies.txt src/main.ts",
     "format": "prettier --write .",
-    "lint": "eslint"
+    "lint": "eslint",
+    "version": "npm run build"
   },
-  "version": "2.2.3"
+  "version": "2.2.4"
 }

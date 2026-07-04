@@ -40804,7 +40804,7 @@ function octokit_getOctokit(token, options, ...additionalPlugins) {
 }
 
 ;// CONCATENATED MODULE: ./package.json
-const package_namespaceObject = /*#__PURE__*/JSON.parse('{"UU":"@amezin/detect-changes-action","rE":"2.2.3"}');
+const package_namespaceObject = /*#__PURE__*/JSON.parse('{"UU":"@amezin/detect-changes-action","rE":"2.2.4"}');
 ;// CONCATENATED MODULE: ./src/main.ts
 
 
