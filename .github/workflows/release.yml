@@ -80,14 +80,3 @@ jobs:
         env:
           TAG: ${{ needs.need-release.outputs.tag }}
           LATEST: ${{ needs.need-release.outputs.latest }}
-
-      - id: parse
-        run: |
-          MINOR="$(echo "$TAG" | grep -oE '^v[0-9]+\.[0-9]+')"
-          echo "minor=$MINOR" | tee -a "$GITHUB_OUTPUT"
-
-          MAJOR="$(echo "$TAG" | grep -oE '^v[0-9]+')"
-          echo "major=$MAJOR" | tee -a "$GITHUB_OUTPUT"
-
-        env:
-          TAG: ${{ needs.need-release.outputs.tag }}
