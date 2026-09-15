@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", "config:js-app", ":rebaseStalePrs"],
+  "extends": [
+    "config:best-practices",
+    "config:js-app",
+    ":rebaseStalePrs",
+    ":semanticCommitsDisabled"
+  ],
   "customDatasources": {
     "github-release-assets": {
       "transformTemplates": [
@@ -51,6 +56,5 @@
     }
   ],
   "postUpdateOptions": ["npmDedupe", "npmInstallTwice"],
-  "platformAutomerge": false,
-  "semanticCommits": "disabled"
+  "platformAutomerge": false
 }
