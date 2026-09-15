@@ -122,7 +122,7 @@ jobs:
           persist-credentials: false
 
       - id: simple-match
-        uses: ./.
+        uses: $/.
         with:
           files: action.yml
           base: efc72ea7731bb189c5c9c5dfa1836eb281732f48
@@ -132,7 +132,7 @@ jobs:
           CHANGED: ${{ steps.simple-match.outputs.changed }}
 
       - id: all-negated
-        uses: ./.
+        uses: $/.
         with:
           files: |
             !action.yml
@@ -153,7 +153,7 @@ jobs:
 
       - id: current-pr
         if: steps.current-pr-files.outcome == 'success'
-        uses: ./.
+        uses: $/.
         with:
           files: ${{ steps.current-pr-files.outputs.files }}
           ignore-removed: true
@@ -174,7 +174,7 @@ jobs:
 
       - id: current-pr-negate
         if: steps.current-pr-negate-files.outcome == 'success'
-        uses: ./.
+        uses: $/.
         with:
           files: ${{ steps.current-pr-negate-files.outputs.files }}
           ignore-removed: true
@@ -185,7 +185,7 @@ jobs:
           CHANGED: ${{ steps.current-pr-negate.outputs.changed }}
 
       - id: truncated
-        uses: ./.
+        uses: $/.
         with:
           repository: torvalds/linux
           files: this-does-not-even-exist
@@ -197,7 +197,7 @@ jobs:
           CHANGED: ${{ steps.truncated.outputs.changed }}
 
       - id: no-match
-        uses: ./.
+        uses: $/.
         with:
           files: this-does-not-even-exist
           base: efc72ea7731bb189c5c9c5dfa1836eb281732f48
@@ -207,7 +207,7 @@ jobs:
           CHANGED: ${{ steps.no-match.outputs.changed }}
 
       - id: no-match-negated
-        uses: ./.
+        uses: $/.
         with:
           files: |
             action.yml
@@ -219,7 +219,7 @@ jobs:
           CHANGED: ${{ steps.no-match-negated.outputs.changed }}
 
       - id: empty
-        uses: ./.
+        uses: $/.
         with:
           files: |
             # empty, only comment
@@ -230,7 +230,7 @@ jobs:
           CHANGED: ${{ steps.empty.outputs.changed }}
 
       - id: removal
-        uses: ./.
+        uses: $/.
         with:
           files: .github/dependabot.yml
           head: fda90f4116b0a18ee68629ceb6dbdeb530bc8b31
@@ -242,7 +242,7 @@ jobs:
           CHANGED: ${{ steps.removal.outputs.changed }}
 
       - id: removal-ignored
-        uses: ./.
+        uses: $/.
         with:
           files: .github/dependabot.yml
           head: fda90f4116b0a18ee68629ceb6dbdeb530bc8b31
