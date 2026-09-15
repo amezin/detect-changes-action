@@ -28,8 +28,28 @@
   ],
   "packageRules": [
     {
-      "extends": ["helpers:pinGitHubActionDigests"],
+      "extends": ["helpers:pinGitHubActionDigests", ":pinVersions"],
       "versioning": "npm"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["action", "workflow"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "automerge": true,
+      "addLabels": ["skip-changelog"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "matchDatasources": ["custom.github-release-assets"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "automerge": true,
+      "addLabels": ["skip-changelog"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
+      "extends": ["packages:linters"],
+      "automerge": true,
+      "addLabels": ["skip-changelog"]
     },
     {
       "matchDatasources": ["node-version"],
